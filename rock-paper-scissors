@@ -1,0 +1,95 @@
+turns = 0 
+
+p1wins = 0
+p1rock = 0
+p1paper = 0
+p1scissors = 0
+
+p2wins = 0
+p2rock = 0
+p2paper = 0
+p2scissors = 0
+
+while turns < 30:
+    ChoiceA = input("Player 1, rock, paper or scissors? ")
+    ChoiceB = input("Player 2, rock, paper or scissors? ")
+    if ChoiceA not in ["rock","Rock","scissors","Scissors","paper","Paper"]:
+        print("Player 1, please restart and enter a valid value.")
+        break
+    elif ChoiceB not in ["rock","Rock","scissors","Scissors","paper","Paper"]:
+        print("Player 2, please restart and enter a valid value.")
+        break
+        
+    while ChoiceB in ["rock","Rock"]:
+        turns = turns + 1
+        p2rock += 1
+        if ChoiceA in ["scissors","Scissors"]:
+            print("Player 2, you win! You picked rock.")
+            p2wins += 1
+            p1scissors += 1
+            break
+        elif ChoiceA in ["paper","Paper"]:
+            print("Player 1, You win! You picked paper.")
+            p1wins += 1
+            p1paper += 1
+            break
+        else:
+            print("It's a tie. You both picked rock.")
+            p1rock += 1
+            break
+    
+    while ChoiceB in ["paper","Paper"]:
+        p2paper += 1
+        turns = turns + 1
+        if ChoiceA in ["scissors","Scissors"]:
+            print("Player 1, you win!. You picked scissors. ")
+            print("")
+            p1wins += 1
+            p1scissors += 1
+            break
+        elif ChoiceA in ["rock","Rock"]:
+            print("Player 2, you win! You picked paper. ")
+            print("")
+            p1rock += 1
+            p2wins += 1
+            break
+        else:
+            print("It's a tie, you both picked paper. ")
+            print("")
+            p1paper += 1
+            break
+    
+    while ChoiceB in ["scissors","Scissors"]:
+        turns = turns + 1
+        p2scissors = p2scissors + 1
+        if ChoiceA in ["rock","Rock"]:
+            print("Player 1, you win! You picked rock. ")
+            print("")
+            p1wins += 1
+            p1rock += 1
+            break
+        elif ChoiceA in ["paper","Paper"]:
+            print("Player 2, you win! You picked scissors.")
+            print("")
+            p1paper += 1
+            p2wins += 1
+            break
+        else:
+            print("It's a tie, you both picked scissors.")
+            print("")
+            p1scissors += 1
+            break
+
+print("")
+print("PLAYER 1 STATS")
+print("Number of wins =",p1wins)
+print("Number of times you used rock =",p1rock)
+print("Number of times you used paper =",p1paper)
+print("Number of times you used scissors =",p1scissors)
+
+print("")
+print("PLAYER 2 STATS")
+print("Number of wins =",p2wins)
+print("Number of times you used rock =",p2rock)
+print("Number of times you used paper =",p2paper)
+print("Number of times you used scissors =",p2scissors)

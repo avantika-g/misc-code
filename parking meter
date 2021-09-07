@@ -1,0 +1,81 @@
+# igcse pre release
+
+price = 0
+discount = 0
+totalday = 0
+midnightcost = 2 #constant
+maxstayin = 2 #constant
+maxsaturday = 4 #constant
+
+def faircalc():
+    global price
+    global hours
+    global costdays
+    if (arrival+hours)>16 and arrival <16:
+        price = ((16-arrival)*costdays)+midnightcost
+        if discount == 1:
+            price = (90/100)*price
+    if arrival < 16 and (arrival+hours)<=16:
+        price = hours*costdays
+        if discount == 1:
+            price = (90/100)*price
+    if arrival > 15:
+        price = midnightcost
+        if discount == 1:
+            price = (50/100)*price
+    print ("You need to pay", price)
+
+def enterday():
+    global day
+    day = input("Enter the day:")
+    while day not in ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]:
+        day = input("Invalid data. Re-enter the day:")
+enterday()
+
+while True:
+    arrival = int(input("Enter your HOUR of arrival in 24 hour clock:"))
+    while arrival < 8 or arrival >= 24:
+        arrival = int(input("Sorry, you can't park between 24:00 to 8:00. Come back later or re-enter your HOUR of arrival:"))
+
+    hours = int(input("Enter number of hours to park your car:"))
+    while (hours+arrival) > 24:
+        hours = int(input("You can't stay past midnight. Re-enter number of hours to park your car: "))
+    while hours > maxstayin and arrival < 15 and day in ["Monday","Tuesday","Wednesday","Thursday","Friday"]:
+        hours = int(input("Max stay in hours is 2. Re-enter number of hours to park your car:"))
+    while hours > maxsaturday and arrival < 15 and day == "Saturday":
+        hours = int(input("Max stay in hours is 4. Re-enter number of hours to park your car:"))
+
+    parkno = int(input("Enter your 5 digit frequent parking number. Enter 00000 if you don't have one: "))
+    while len(parkno) != 5:
+        parkno = input("Enter your 5 digit frequent parking number: ")
+    digit = 11-(((int(parkno[0])*5)+(int(parkno[1])*4)+(int(parkno[2])*3)+(int(parkno[3])*2))%11)
+    if int(parkno[4]) != digit:
+        print ("discount will not be applied")
+        discount = 0
+    else:
+        print ("check passed. discount will be applied")
+        discount = 1
+
+    if day == "Sunday":
+        costdays = 2
+        faircalc()
+    if day in ["Monday","Tuesday","Wednesday","Thursday","Friday"]:
+        costdays = 10
+        faircalc()
+    if day == "Saturday":
+        costdays = 3
+        faircalc()
+
+    paid = float(input("Please enter amount to pay. No change will be issued: "))
+    while paid < float(price):
+        paid = float(input("Please enter the correct amount: "))
+    if paid >= float(price):
+        totalday += paid
+
+    print ("Is it still", day,", Y or N?")
+    totalprint = input()
+
+    if totalprint == "N":
+        print ("total payment for", day, "is", totalday)
+        totalday = 0
+        enterday()

@@ -1,0 +1,12 @@
+import requests
+import pandas as pd
+
+url = 'https://raw.githubusercontent.com/hanzhang0420/Women-Clothing-E-commerce/master/Womens%20Clothing%20E-Commerce%20Reviews.csv'
+res = requests.get(url, allow_redirects=True)
+with open('reviews.csv','wb') as file:
+    file.write(res.content)
+reviews = pd.read_csv('reviews.csv')
+
+# Extract desired columns and view the dataframe
+reviews = reviews[['Review Text','Recommended IND']].dropna()
+reviews.head(5)

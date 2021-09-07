@@ -1,0 +1,14 @@
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup
+
+wiki_url = 'https://en.wikipedia.org/wiki/List_of_current_members_of_the_United_States_House_of_Representatives'
+table_id = 'votingmembers' #inspect element
+
+response = requests.get(wiki_url) #html markup
+soup = BeautifulSoup(response.text, 'html.parser')
+
+congress_table = soup.find('table', attrs = {'id': table_id})
+
+x = pd.read_html(str(congress_table))
+print (x)
